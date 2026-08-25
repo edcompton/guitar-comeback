@@ -1,1 +1,6 @@
 .DS_Store
+.env
+.spotify-token.json
+library.json
+tags.json
+__pycache__/

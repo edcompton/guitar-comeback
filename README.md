@@ -64,3 +64,5 @@ python3 -m http.server 8000   # then http://localhost:8000
 | `sw.js` | Offline cache (bump `CACHE_VERSION` when assets change). |
 | `manifest.webmanifest`, `icons/` | PWA install on Android. |
 | `CLAUDE.md` | Conventions for Claude Code — read by every session. |
+| `backlog.json` | Generated board of Ultimate Guitar links, built from Spotify liked songs. |
+| `tools/` | The Spotify → backlog pipeline. See [tools/README.md](tools/README.md). |

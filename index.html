@@ -403,6 +403,33 @@
     return main+(sub?' ('+sub+')':'');
   }
 
+  function buildBoard(b, ticks){
+    var board=el('div','board');
+    board.appendChild(el('h3',null, esc(b.emoji)+' '+esc(b.title)));
+    board.appendChild(el('div','sub', esc(b.sub||'')));
+    (b.songs||[]).forEach(function(s){
+      var row=el('div','song'); row.dataset.id=s.id;
+      var tick=el('button','tick','\u2713'); tick.title='Mark as nailed / progressed';
+      var t=el('div','t');
+      t.innerHTML=s.parts.map(function(p){
+        return p.u ? '<a href="'+p.u+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>' : esc(p.t);
+      }).join(' \u00b7 ') + (s.small?'<small>'+esc(s.small)+'</small>':'');
+      var chip=el('span','chip '+(s.chip&&s.chip.c||'later'), esc(s.chip&&s.chip.t||''));
+      row.appendChild(tick); row.appendChild(t); row.appendChild(chip);
+      if(ticks.indexOf(s.id)>=0){ row.classList.add('done'); }
+      tick.addEventListener('click',function(){
+        row.classList.toggle('done');
+        var l=songLabel(s), on=row.classList.contains('done');
+        var cur=loadTicks();
+        if(on){ if(cur.indexOf(s.id)<0)cur.push(s.id); if(sessionMarks.indexOf(l)<0)sessionMarks.push(l); }
+        else { cur=cur.filter(function(x){return x!==s.id;}); sessionMarks=sessionMarks.filter(function(x){return x!==l;}); }
+        saveTicks(cur); renderBar();
+      });
+      board.appendChild(row);
+    });
+    return board;
+  }
+
   function render(data){
     // This week
     var tw=data.thisWeek||{};
@@ -419,32 +446,7 @@
     // Boards
     var ticks=loadTicks();
     var boardsEl=document.getElementById('boards'); boardsEl.innerHTML='';
-    (data.boards||[]).forEach(function(b){
-      var board=el('div','board');
-      board.appendChild(el('h3',null, esc(b.emoji)+' '+esc(b.title)));
-      board.appendChild(el('div','sub', esc(b.sub||'')));
-      (b.songs||[]).forEach(function(s){
-        var row=el('div','song'); row.dataset.id=s.id;
-        var tick=el('button','tick','✓'); tick.title='Mark as nailed / progressed';
-        var t=el('div','t');
-        t.innerHTML=s.parts.map(function(p){
-          return p.u ? '<a href="'+p.u+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>' : esc(p.t);
-        }).join(' · ') + (s.small?'<small>'+esc(s.small)+'</small>':'');
-        var chip=el('span','chip '+(s.chip&&s.chip.c||'later'), esc(s.chip&&s.chip.t||''));
-        row.appendChild(tick); row.appendChild(t); row.appendChild(chip);
-        if(ticks.indexOf(s.id)>=0){ row.classList.add('done'); }
-        tick.addEventListener('click',function(){
-          row.classList.toggle('done');
-          var l=songLabel(s), on=row.classList.contains('done');
-          var cur=loadTicks();
-          if(on){ if(cur.indexOf(s.id)<0)cur.push(s.id); if(sessionMarks.indexOf(l)<0)sessionMarks.push(l); }
-          else { cur=cur.filter(function(x){return x!==s.id;}); sessionMarks=sessionMarks.filter(function(x){return x!==l;}); }
-          saveTicks(cur); renderBar();
-        });
-        board.appendChild(row);
-      });
-      boardsEl.appendChild(board);
-    });
+    (data.boards||[]).forEach(function(b){ boardsEl.appendChild(buildBoard(b, ticks)); });
 
     // Meta
     var m=data.meta||{};
@@ -454,7 +456,21 @@
   fetch('data.json',{cache:'no-cache'}).then(function(r){
     if(!r.ok) throw new Error(r.status);
     return r.json();
-  }).then(render).catch(function(){
+  }).then(function(data){
+    render(data);
+    // Generated backlog, appended after the curated boards. Absent file is fine --
+    // the page is fully useful without it.
+    return fetch('backlog.json',{cache:'no-cache'}).then(function(r){
+      return r.ok ? r.json() : null;
+    }).then(function(bl){
+      if(!bl||!bl.board||!(bl.board.songs||[]).length) return;
+      var b=bl.board, m=bl.meta||{};
+      if(m.generated){
+        b=Object.assign({},b,{sub:(b.sub||'')+' \u00b7 built '+m.generated});
+      }
+      document.getElementById('boards').appendChild(buildBoard(b, loadTicks()));
+    }).catch(function(){});
+  }).catch(function(){
     document.getElementById('loaderr').hidden=false;
   });
 
