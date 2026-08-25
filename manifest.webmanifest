@@ -1,0 +1,14 @@
+{
+  "name": "Guitar Comeback HQ",
+  "short_name": "Guitar HQ",
+  "description": "Ed's guitar comeback plan — song boards, weekly rhythm, and the 12-week arc.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#131009",
+  "theme_color": "#131009",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

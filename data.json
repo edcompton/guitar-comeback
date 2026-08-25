@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "updated": "2026-08-25",
+    "phase": "II — Build",
+    "note": "Chips mirror the original July plan. Tell Claude Code what's actually nailed or stuck and it moves them."
+  },
+  "thisWeek": {
+    "title": "Week 1 — the re-entry week",
+    "lede": "Deliberately gentle, and it leads with reviving what you already know — that's the fastest route back to \"oh right, I <strong>love</strong> this\".",
+    "rows": [
+      { "day": "Mon", "anchor": false, "html": "<b>Blackbird, first pass.</b> Expect rust — the first fumbling run-through is the worst it will ever sound again. It counts double." },
+      { "day": "Tue", "anchor": true, "html": "<b>Electric Blues Lab #1.</b> 10 minutes on the pentatonic pattern 1 refresher (Blues Guitar &amp; Easy Improvisation, in the library), then Seven Nation Army at proper volume. End grinning." },
+      { "day": "Wed", "anchor": false, "html": "<b>Tune the Dove to open D</b> (lesson in the library) and do slide foundations: one string, slow, slide directly over the fret wire. Ten minutes is plenty; strum the open tuning after — it sounds glorious with zero effort." },
+      { "day": "Thu", "anchor": true, "html": "<b>Workshop: Blackbird, sectional.</b> Week 1's \"new song\" is a revival — slow work on whichever passage always wobbled." },
+      { "day": "Fri", "anchor": false, "html": "<b>Free play</b> with the Guitar Comeback playlist on. Whatever your hands feel like." },
+      { "day": "Sat", "anchor": false, "html": "<b>Blackbird, full runs</b> — plus any old favourite that surfaces on its own." },
+      { "day": "Sun", "anchor": false, "html": "<b>15 min of slide</b>, then the 10-minute review: tick what you've nailed on the boards below and tell Claude." }
+    ]
+  },
+  "boards": [
+    {
+      "id": "revive",
+      "emoji": "🪕",
+      "title": "Revive queue",
+      "sub": "Martin · standard tuning · rusty → performance level, one per week",
+      "songs": [
+        { "id": "blackbird", "parts": [{ "t": "Blackbird", "u": "https://tabs.ultimate-guitar.com/tab/the-beatles/blackbird-tabs-180986" }], "small": "The Beatles", "chip": { "t": "week 1", "c": "now" } },
+        { "id": "these-days", "parts": [{ "t": "These Days", "u": "https://tabs.ultimate-guitar.com/tab/475672" }], "small": "Nico", "chip": { "t": "week 2", "c": "now" } },
+        { "id": "hang-me", "parts": [{ "t": "Hang Me, Oh Hang Me", "u": "https://tabs.ultimate-guitar.com/tab/dave-van-ronk/hang-me-oh-hang-me-tabs-1453368" }], "small": "Dave Van Ronk", "chip": { "t": "up next", "c": "next" } },
+        { "id": "fare-thee-well", "parts": [{ "t": "Fare Thee Well (Dink's Song)", "u": "https://tabs.ultimate-guitar.com/tab/oscar-isaac/fare-thee-well-dinks-song-chords-1443164" }], "small": "Inside Llewyn Davis", "chip": { "t": "up next", "c": "next" } },
+        { "id": "green-green", "parts": [{ "t": "Green Green Rocky Road", "u": "https://tabs.ultimate-guitar.com/tab/dave-van-ronk/green-green-rocky-road-tabs-1474464" }], "small": "Dave Van Ronk", "chip": { "t": "phase II", "c": "later" } },
+        { "id": "death-dont", "parts": [{ "t": "Death Don't Have No Mercy", "u": "https://tabs.ultimate-guitar.com/tab/rev-gary-davis/death-dont-have-no-mercy-chords-981171" }], "small": "Rev. Gary Davis", "chip": { "t": "phase II", "c": "later" } },
+        { "id": "32-20-blues", "parts": [{ "t": "32-20 Blues", "u": "https://tabs.ultimate-guitar.com/tab/robert-johnson/32-20-blues-tabs-72542" }], "small": "Robert Johnson", "chip": { "t": "phase II–III", "c": "later" } },
+        { "id": "babe-im-gonna", "parts": [{ "t": "Babe I'm Gonna Leave You", "u": "https://tabs.ultimate-guitar.com/tab/led-zeppelin/babe-im-gonna-leave-you-tabs-27482" }], "small": "Led Zeppelin", "chip": { "t": "phase III", "c": "later" } },
+        { "id": "youth-family-tree", "parts": [{ "t": "Youth", "u": "https://tabs.ultimate-guitar.com/tab/daughter/youth-tabs-1721358" }, { "t": "Family Tree", "u": "https://tabs.ultimate-guitar.com/tab/shakey-graves/family-tree-chords-1473413" }], "small": "Daughter · Shakey Graves", "chip": { "t": "anytime", "c": "later" } },
+        { "id": "kensington-blues", "parts": [{ "t": "Kensington Blues", "u": "https://tabs.ultimate-guitar.com/tab/jack-rose/kensington-blues-tabs-2919716" }], "small": "Jack Rose", "chip": { "t": "★ capstone", "c": "next" } }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "emoji": "🎯",
+      "title": "New acoustic pipeline",
+      "sub": "From your saved tabs · one at a time, Thursday workshops",
+      "songs": [
+        { "id": "silver-joy", "parts": [{ "t": "Silver Joy", "u": "https://tabs.ultimate-guitar.com/tab/damien-jurado/silver-joy-tabs-5099575" }], "small": "Damien Jurado", "chip": { "t": "first build", "c": "now" } },
+        { "id": "the-partisan", "parts": [{ "t": "The Partisan", "u": "https://tabs.ultimate-guitar.com/tab/leonard-cohen/the-partisan-chords-64998" }], "small": "Leonard Cohen", "chip": { "t": "rolling fingerpicking", "c": "next" } },
+        { "id": "late-july", "parts": [{ "t": "Late July", "u": "https://tabs.ultimate-guitar.com/tab/shakey-graves/late-july-tabs-1426237" }], "small": "Shakey Graves", "chip": { "t": "groove + percussive", "c": "later" } },
+        { "id": "drying-of-the-lawns", "parts": [{ "t": "The Drying of the Lawns", "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=The%20Drying%20Of%20The%20Lawns" }], "small": "The Tallest Man on Earth", "chip": { "t": "open tuning, big one", "c": "later" } }
+      ]
+    },
+    {
+      "id": "electric",
+      "emoji": "🔥",
+      "title": "Electric & riff lab",
+      "sub": "Strat + Bassbreaker · pick confidence through songs you love",
+      "songs": [
+        { "id": "seven-nation-army", "parts": [{ "t": "Seven Nation Army", "u": "https://tabs.ultimate-guitar.com/tab/the-white-stripes/seven-nation-army-tabs-50735" }], "small": "The White Stripes", "chip": { "t": "day one", "c": "now" } },
+        { "id": "i-got-mine", "parts": [{ "t": "I Got Mine", "u": "https://tabs.ultimate-guitar.com/tab/the-black-keys/i-got-mine-tabs-845183" }], "small": "The Black Keys", "chip": { "t": "riff + shuffle feel", "c": "next" } },
+        { "id": "lonely-boy-gold", "parts": [{ "t": "Lonely Boy", "u": "https://tabs.ultimate-guitar.com/tab/the-black-keys/lonely-boy-tabs-2671290" }, { "t": "Gold on the Ceiling", "u": "https://tabs.ultimate-guitar.com/tab/the-black-keys/gold-on-the-ceiling-tabs-1114721" }], "small": "The Black Keys", "chip": { "t": "groove + drive", "c": "next" } },
+        { "id": "little-black-submarines", "parts": [{ "t": "Little Black Submarines", "u": "https://tabs.ultimate-guitar.com/tab/the-black-keys/little-black-submarines-tabs-1137491" }], "small": "The Black Keys", "chip": { "t": "the bridge song", "c": "next" } },
+        { "id": "cissy-strut", "parts": [{ "t": "Cissy Strut", "u": "https://tabs.ultimate-guitar.com/tab/the-meters/cissy-strut-tabs-1043125" }], "small": "The Meters", "chip": { "t": "funk pick bootcamp", "c": "next" } },
+        { "id": "freaking-out", "parts": [{ "t": "Freaking Out the Neighborhood", "u": "https://tabs.ultimate-guitar.com/tab/mac-demarco/freaking-out-the-neighborhood-tabs-1195384" }], "small": "Mac DeMarco", "chip": { "t": "clean Strat jangle", "c": "later" } },
+        { "id": "ball-and-biscuit", "parts": [{ "t": "Ball and Biscuit", "u": "https://tabs.ultimate-guitar.com/tab/the-white-stripes/ball-and-biscuit-tabs-403172" }], "small": "The White Stripes", "chip": { "t": "improv vehicle", "c": "later" } },
+        { "id": "little-wing", "parts": [{ "t": "Little Wing", "u": "https://tabs.ultimate-guitar.com/tab/jimi-hendrix/little-wing-tabs-36571" }], "small": "Jimi Hendrix — your saved tab", "chip": { "t": "★ stretch", "c": "later" } }
+      ]
+    },
+    {
+      "id": "slide",
+      "emoji": "🥃",
+      "title": "Slide school",
+      "sub": "Epiphone Dove · lives in open D · slide stays on the stand",
+      "songs": [
+        { "id": "slide-foundations", "parts": [{ "t": "Foundations" }], "small": "Intonation over the fret wire · muting behind the slide · slow vibrato", "chip": { "t": "start here", "c": "now" } },
+        { "id": "dust-my-broom", "parts": [{ "t": "Dust My Broom lick", "u": "https://tabs.ultimate-guitar.com/tab/elmore-james/dust-my-broom-tabs-206963" }], "small": "Elmore James — the slide rosetta stone", "chip": { "t": "phase II", "c": "next" } },
+        { "id": "death-letter", "parts": [{ "t": "Death Letter", "u": "https://tabs.ultimate-guitar.com/tab/the-white-stripes/death-letter-tabs-127739" }], "small": "Son House, via The White Stripes", "chip": { "t": "delta roots × Jack White", "c": "next" } },
+        { "id": "have-mercy-on-me", "parts": [{ "t": "Have Mercy on Me", "u": "https://tabs.ultimate-guitar.com/tab/the-black-keys/have-mercy-on-me-tabs-1251885" }], "small": "Junior Kimbrough, via The Black Keys", "chip": { "t": "you know it — add slide", "c": "later" } },
+        { "id": "hill-country-drones", "parts": [{ "t": "Hill-country boogie drones" }], "small": "R.L. Burnside style — one chord, endless groove", "chip": { "t": "free play fuel", "c": "later" } }
+      ]
+    }
+  ]
+}
