@@ -1,5 +1,7 @@
 # Guitar Comeback HQ
 
+**Live:** https://edcompton.github.io/guitar-comeback/
+
 Ed's guitar comeback plan as a small static web app: song boards with tab links and progress chips, the weekly practice rhythm, and the 12-week arc. Data lives in `data.json`; the page renders it. Designed to be edited by Claude Code on an always-on Mac and served by GitHub Pages.
 
 ## One-time setup on the Mac Mini

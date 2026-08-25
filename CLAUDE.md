@@ -29,7 +29,9 @@ A single-page static app tracking Ed's guitar comeback: song boards with progres
 
 ## Deploy
 
-Deploy = commit + push to `main`; GitHub Pages serves the repo root. After any change: `git add -A && git commit && git push`. Verify with the Pages URL, not file://.
+Live at **https://edcompton.github.io/guitar-comeback/** (repo: `edcompton/guitar-comeback`, this Mac mini at `~/guitar-comeback`).
+
+Deploy = commit + push to `main`; GitHub Pages serves the repo root. After any change: `git add -A && git commit && git push`. Pages rebuilds in a minute or so. Verify with the Pages URL, not file://.
 
 ## Testing locally
 
