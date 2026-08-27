@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Pull every liked song (plus artist genres) from Spotify into library.json.
+"""Pull every liked song from Spotify into library.json.
+
+Genre enrichment is OFF by default (--genres to try it). Spotify returns an empty
+`genres` array for apps created after the Nov 2024 API restrictions -- verified here
+across 550 artists, every one empty -- and the bulk /v1/artists endpoint 403s, so the
+only route is one request per artist. That crawl buys nothing and risks a multi-hour
+429 on the endpoint. Left in place only in case Spotify restores the field.
 
 Auth is Authorization Code + PKCE, so only a Client ID is needed -- no client
 secret ever touches this machine. The refresh token is cached in
@@ -7,10 +13,10 @@ secret ever touches this machine. The refresh token is cached in
 
 Usage:  python3 tools/1_pull.py
 """
-import base64, hashlib, http.server, json, os, secrets, sys, threading, time
+import argparse, base64, hashlib, http.server, json, os, secrets, sys, threading, time
 import urllib.parse, webbrowser
 import requests
-from common import ROOT, LIBRARY, need, read_json, write_json
+from common import ROOT, LIBRARY, ARTISTS, need, read_json, write_json
 
 REDIRECT = "http://127.0.0.1:8888/callback"   # Spotify allows loopback IP, not "localhost"
 SCOPE = "user-library-read"
@@ -126,6 +132,11 @@ def api_get(url, token, params=None):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--genres", action="store_true",
+                    help="also crawl artist genres (slow, and returns empty for "
+                         "apps created after Nov 2024 -- see module docstring)")
+    args = ap.parse_args()
     token = get_token()
 
     print("Pulling liked songs...")
@@ -151,29 +162,62 @@ def main():
         print(f"  {len(tracks)} so far...", end="\r", flush=True)
     print(f"  {len(tracks)} liked songs.            ")
 
-    # Artist genres: the one useful signal Spotify still gives away free.
-    # (audio-features was deprecated for new apps in Nov 2024.)
-    ids = sorted({i for t in tracks for i in t["artist_ids"]})
-    print(f"Fetching genres for {len(ids)} artists...")
-    genres = {}
-    for i in range(0, len(ids), 50):
-        chunk = ids[i:i + 50]
-        for a in api_get(f"{API}/artists", token, {"ids": ",".join(chunk)}).get("artists", []):
-            if a:
-                genres[a["id"]] = a.get("genres", [])
-        print(f"  {min(i+50, len(ids))}/{len(ids)}", end="\r", flush=True)
-    print(" " * 30, end="\r")
+    # Write the library BEFORE genres. The track pull is the slow, precious part;
+    # a genre hiccup must never cost us all of it.
+    write_json(LIBRARY, {"pulled": time.strftime("%Y-%m-%d"), "tracks": tracks})
+    print(f"Saved {LIBRARY.name} ({len(tracks)} tracks). Now enriching with genres.")
 
-    for t in tracks:
-        g = []
-        for aid in t["artist_ids"]:
-            g.extend(genres.get(aid, []))
-        t["genres"] = sorted(set(g))
-        del t["artist_ids"]
+    if args.genres:
+        # Artist genres: the one useful signal Spotify still gives away free
+        # (audio-features was deprecated for new apps in Nov 2024).
+        #
+        # The bulk GET /v1/artists?ids= endpoint returns 403 for apps created recently,
+        # while GET /v1/artists/{id} still works -- so try bulk, fall back to singles.
+        # Results are cached in artists.json, making this a one-time cost.
+        ids = sorted({i for t in tracks for i in t["artist_ids"]})
+        genres = read_json(ARTISTS, {}) or {}
+        todo = [a for a in ids if a not in genres]
+        print(f"{len(ids)} artists · {len(ids) - len(todo)} cached · {len(todo)} to fetch")
+
+        bulk_ok = True
+        done = 0
+        for i in range(0, len(todo), 50):
+            chunk = todo[i:i + 50]
+            if bulk_ok:
+                try:
+                    for a in api_get(f"{API}/artists", token, {"ids": ",".join(chunk)}).get("artists", []):
+                        if a:
+                            genres[a["id"]] = a.get("genres", [])
+                    done += len(chunk)
+                    print(f"  {done}/{len(todo)}", end="\r", flush=True)
+                    continue
+                except requests.HTTPError as e:
+                    if e.response is None or e.response.status_code != 403:
+                        raise
+                    bulk_ok = False
+                    print("  bulk /artists is 403 for this app -- falling back to "
+                          "one-by-one (~6/sec, cached so this is a one-off).")
+            for aid in chunk:
+                try:
+                    a = api_get(f"{API}/artists/{aid}", token)
+                    genres[aid] = a.get("genres", []) if a else []
+                except requests.HTTPError:
+                    genres[aid] = []          # dead or regional-restricted artist; not fatal
+                done += 1
+                if done % 25 == 0:
+                    write_json(ARTISTS, genres)          # checkpoint: survive a crash
+                    print(f"  {done}/{len(todo)}", end="\r", flush=True)
+        write_json(ARTISTS, genres)
+        print(" " * 40, end="\r")
+    else:
+        for t in tracks:
+            t["genres"] = []
+            del t["artist_ids"]
 
     write_json(LIBRARY, {"pulled": time.strftime("%Y-%m-%d"), "tracks": tracks})
     n_g = sum(1 for t in tracks if t["genres"])
-    print(f"\nWrote {LIBRARY.name}: {len(tracks)} tracks, {n_g} with genre data.")
+    print(f"\nWrote {LIBRARY.name}: {len(tracks)} tracks"
+          + (f", {n_g} with genre data." if args.genres else "."))
     print("Next: python3 tools/2_tag.py")
 
 

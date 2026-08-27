@@ -2,16 +2,18 @@
 """Tag liked songs for guitar-learning value using Claude Haiku, cheaply.
 
 Cost control, in order of how much it saves:
-  1. Genre prefilter  -- free, drops obvious non-guitar tracks before any API call.
-  2. Cache by track id -- re-runs only pay for songs added since last time.
-  3. Batching + terse keys -- ~40 songs per call, single-letter JSON fields.
-  4. Prompt caching on the rubric -- the big constant block is charged once.
+  1. Cache by track id -- re-runs only pay for songs added since last time.
+  2. Batching + terse keys -- ~40 songs per call, single-letter JSON fields.
+  3. Prompt caching on the rubric -- the big constant block is charged once.
+  4. Dedupe + skip already-curated songs -- free, before any API call.
+  5. Genre prefilter -- only bites if library.json actually has genres, which
+     Spotify no longer provides to new apps. Kept for if that ever changes.
 
 Usage:  python3 tools/2_tag.py [--limit N] [--batch 40] [--dry-run]
 """
 import argparse, json, re, sys, time
 import requests
-from common import ROOT, LIBRARY, TAGS, need, read_json, write_json
+from common import ROOT, LIBRARY, TAGS, DATA, need, read_json, write_json
 
 MODEL = "claude-haiku-4-5-20251001"
 PRICE_IN, PRICE_OUT = 1.00 / 1e6, 5.00 / 1e6      # USD per token
@@ -57,14 +59,35 @@ Reply with ONLY a JSON array, one object per song, same order as the input, each
 {"n":<index>,"g":..,"f":..,"e":"..","d":..,"w":".."}. No prose, no markdown fence."""
 
 
+def norm(s):
+    s = re.sub(r"\(.*?\)|\[.*?\]", " ", s.lower())
+    s = re.split(r" - (remaster|live|mono|stereo|single|radio|version)", s)[0]
+    return re.sub(r"[^a-z0-9]+", "", s)
+
+
+def curated_titles():
+    """Songs already on a hand-curated board never need tagging."""
+    out = set()
+    for b in (read_json(DATA) or {}).get("boards", []):
+        for song in b.get("songs", []):
+            for p in song.get("parts", []):
+                out.add(norm(p["t"]))
+    return out
+
+
 def prefiltered(tracks):
-    """Split into (send to model, dropped for free)."""
+    """Split into (send to model, dropped for free). All the free wins live here."""
+    have, seen = curated_titles(), set()
     send, dropped = [], []
     for t in tracks:
+        key = norm(t["artist"].split(",")[0]) + "|" + norm(t["title"])
         gj = " ".join(t.get("genres", []))
-        if gj and DROP.search(gj) and not KEEP.search(gj):
-            dropped.append(t)
+        if key in seen or norm(t["title"]) in have:
+            dropped.append(t)                       # duplicate, or already curated
+        elif gj and DROP.search(gj) and not KEEP.search(gj):
+            dropped.append(t)                       # genre says definitely not guitar
         else:
+            seen.add(key)
             send.append(t)
     return send, dropped
 
@@ -122,8 +145,8 @@ def main():
     if a.limit:
         todo = todo[:a.limit]
 
-    print(f"{len(tracks)} liked · {len(dropped)} dropped by genre (free) · "
-          f"{len(send) - len(todo)} already cached · {len(todo)} to tag")
+    print(f"{len(tracks)} liked · {len(dropped)} dropped free (dupes, already "
+          f"curated, genre) · {len(send) - len(todo)} cached · {len(todo)} to tag")
 
     if a.dry_run or not todo:
         est = (len(todo) * 22 * PRICE_IN) + (len(todo) * 28 * PRICE_OUT)

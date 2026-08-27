@@ -44,11 +44,27 @@ python3 tools/2_tag.py --limit 40   # tag only 40, to eyeball the quality first
 
 ## What it costs
 
-Roughly **$0.30 per 2,000 songs**, and far less on later runs — tags are cached by
-Spotify track id in `tags.json`, so a re-run only pays for music you've liked since.
-The genre prefilter drops obvious non-guitar tracks before any API call, for free.
+Roughly **$0.50 for a 2,900-song library**, and far less on later runs — tags are
+cached by Spotify track id in `tags.json`, so a re-run only pays for music you've
+liked since. Duplicates and already-curated songs are dropped before any API call.
 
 `2_tag.py` prints real token counts and the actual dollar cost at the end of every run.
+Always sanity-check with `--dry-run` first.
+
+## Two Spotify API limits worth knowing
+
+Both were established the hard way on this library, not read off a changelog:
+
+1. **`GET /v1/artists?ids=` (bulk) returns 403** for apps created after Spotify's
+   Nov 2024 API restrictions. The single-artist `GET /v1/artists/{id}` still returns 200.
+2. **The `genres` field comes back empty regardless.** Checked across 550 artists —
+   every one empty. So artist genres are simply not available to new apps, and the
+   genre prefilter in `2_tag.py` is dormant code kept only in case that changes.
+
+Consequence: `1_pull.py` does **not** fetch genres by default. `--genres` still tries,
+but it costs one request per artist and buys nothing. Don't run it casually — a
+1,600-artist crawl earned a `Retry-After: 85220` (~24 hour) throttle on that endpoint.
+`/v1/me/tracks` is throttled separately and was unaffected.
 
 ## Tuning the picks
 

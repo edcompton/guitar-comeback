@@ -4,6 +4,7 @@ import os, json, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 LIBRARY = ROOT / "library.json"      # gitignored: full liked-songs dump
 TAGS    = ROOT / "tags.json"         # gitignored: tag cache, keyed by track id
+ARTISTS = ROOT / "artists.json"      # gitignored: artist -> genres cache
 BACKLOG = ROOT / "backlog.json"      # committed: the curated output
 DATA    = ROOT / "data.json"         # the hand-curated boards
 
