@@ -1,0 +1,190 @@
+{
+ "meta": {
+  "generated": "2026-08-27",
+  "liked": 2965,
+  "tagged": 2886,
+  "qualified": 410,
+  "shown": 12,
+  "by_edge": {
+   "finger": 3,
+   "pick": 3,
+   "electric": 3,
+   "slide": 3
+  }
+ },
+ "board": {
+  "emoji": "🎧",
+  "title": "From your Spotify",
+  "sub": "auto-suggested from liked songs · titles open an Ultimate Guitar search",
+  "songs": [
+   {
+    "id": "bl-bo-diddley-i-can-tell",
+    "parts": [
+     {
+      "t": "I Can Tell",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Bo+Diddley+I+Can+Tell"
+     }
+    ],
+    "small": "Bo Diddley — Signature Bo Diddley rhythm, essential technique",
+    "chip": {
+     "t": "electric",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-skip-james-hard-time-killing-floor-blues",
+    "parts": [
+     {
+      "t": "Hard Time Killing Floor Blues",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Skip+James+Hard+Time+Killing+Floor+Blues"
+     }
+    ],
+    "small": "Skip James — Delta blues fingerpicking, bottleneck slide throughout",
+    "chip": {
+     "t": "fingerstyle",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-mississippi-fred-mcdowell-don-t-mistreat-nobody-",
+    "parts": [
+     {
+      "t": "Don't Mistreat Nobody (Cause You Got a Few Dimes)",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Mississippi+Fred+McDowell+Don%27t+Mistreat+Nobody+%28Cause+You+Got+a+Few+Dimes%29"
+     }
+    ],
+    "small": "Mississippi Fred McDowell — Raw slide blues, bottleneck Mississippi style, fingerstyle depth",
+    "chip": {
+     "t": "slide",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-doc-watson-windy-and-warm",
+    "parts": [
+     {
+      "t": "Windy And Warm",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Doc+Watson+Windy+And+Warm"
+     }
+    ],
+    "small": "Doc Watson — Open tuning, fingerstyle melody, clean technique showcase",
+    "chip": {
+     "t": "fingerstyle",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-jack-white-old-scratch-blues",
+    "parts": [
+     {
+      "t": "Old Scratch Blues",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Jack+White+Old+Scratch+Blues"
+     }
+    ],
+    "small": "Jack White — 12-bar blues; slide, riffing, electric soloing throughout",
+    "chip": {
+     "t": "electric",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-elmore-james-so-mean-to-me",
+    "parts": [
+     {
+      "t": "So Mean to Me",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Elmore+James+So+Mean+to+Me"
+     }
+    ],
+    "small": "Elmore James — Slide riff, shuffle blues, signature sound",
+    "chip": {
+     "t": "slide",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-doc-watson-doc-s-guitar",
+    "parts": [
+     {
+      "t": "Doc's Guitar",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Doc+Watson+Doc%27s+Guitar"
+     }
+    ],
+    "small": "Doc Watson — Instrumental showcase, fingerstyle technique, open tuning work",
+    "chip": {
+     "t": "fingerstyle",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-elmore-james-the-12-year-old-boy",
+    "parts": [
+     {
+      "t": "The 12 Year Old Boy",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Elmore+James+The+12+Year+Old+Boy"
+     }
+    ],
+    "small": "Elmore James — Slide guitar riff, shuffle groove foundation",
+    "chip": {
+     "t": "electric",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-taj-mahal-statesboro-blues",
+    "parts": [
+     {
+      "t": "Statesboro Blues",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Taj+Mahal+Statesboro+Blues"
+     }
+    ],
+    "small": "Taj Mahal — Open D slide; Scrapper Blackwell bottleneck foundation",
+    "chip": {
+     "t": "slide",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-arthur-smith-guitar-boogie",
+    "parts": [
+     {
+      "t": "Guitar Boogie",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Arthur+Smith+Guitar+Boogie"
+     }
+    ],
+    "small": "Arthur Smith — Fingerpicking boogie, percussive technique showcase",
+    "chip": {
+     "t": "pick",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-chet-atkins-jam-man",
+    "parts": [
+     {
+      "t": "Jam Man",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Chet+Atkins+Jam+Man"
+     }
+    ],
+    "small": "Chet Atkins — Fingerstyle flatpicking, rapid-fire technique",
+    "chip": {
+     "t": "pick",
+     "c": "later"
+    }
+   },
+   {
+    "id": "bl-shakey-graves-esm-patterson-dearly-departed",
+    "parts": [
+     {
+      "t": "Dearly Departed",
+      "u": "https://www.ultimate-guitar.com/search.php?search_type=title&value=Shakey+Graves+Dearly+Departed"
+     }
+    ],
+    "small": "Shakey Graves — Clawhammer, folk-blues flatpick duet",
+    "chip": {
+     "t": "pick",
+     "c": "later"
+    }
+   }
+  ]
+ }
+}

@@ -11,6 +11,7 @@ A single-page static app tracking Ed's guitar comeback: song boards with progres
 - **`backlog.json`** — *generated*, not hand-edited. The "From your Spotify" board, built by `tools/`. Rendered after the curated boards; the page works fine without it. Regenerate rather than editing by hand.
 - **`tools/`** — the Spotify → backlog pipeline (`1_pull` → `2_tag` → `3_build`). See `tools/README.md`. Uses its own Anthropic API key from `.env` and a cheap model, deliberately outside the Claude Code loop so a 2,000-song run costs cents rather than session tokens.
   - Spotify gives new apps **no artist genres** (empty field) and **403s the bulk `/v1/artists`** endpoint — verified, not guessed. So tagging runs on artist + title alone, which is enough for well-known music. Don't reinstate a genre crawl without checking the field is actually populated first; a 1,600-artist sweep earned a 24-hour throttle.
+  - The backlog board is deliberately **short (12)**. Song supply was never the bottleneck — 1,023 of Ed's liked songs qualify. It's a queue, not a library; keep it that way unless he asks otherwise.
 
 ## Editing conventions
 

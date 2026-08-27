@@ -11,7 +11,7 @@ Cost control, in order of how much it saves:
 
 Usage:  python3 tools/2_tag.py [--limit N] [--batch 40] [--dry-run]
 """
-import argparse, json, re, sys, time
+import argparse, json, random, re, sys, time
 import requests
 from common import ROOT, LIBRARY, TAGS, DATA, need, read_json, write_json
 
@@ -48,7 +48,15 @@ FOR EACH SONG, RATE
          "finger" (fingerstyle/folk-blues) | "pick" (flatpicking/strumming technique)
          | "electric" (blues lead, riffs, electric vocabulary) | "slide" (open tunings,
          bottleneck) | "none"
- d  1-5  difficulty for a rusty but formerly advanced player (1 trivial, 5 a project)
+ d  1-5  difficulty. Anchor against these, do NOT cluster at 1-2:
+         1 = three open chords, strum it first try ("Knockin' on Heaven's Door")
+         2 = simple fingerpicking or a basic 12-bar ("Freight Train")
+         3 = a real arrangement, a week of evenings ("Blackbird", "These Days")
+         4 = advanced technique or serious speed ("Hang Me Oh Hang Me", Van Ronk)
+         5 = a months-long project ("Kensington Blues", Jack Rose; "Dark Was the Night")
+         Rate the SONG's actual demands, not his talent. A hard piece stays a 5
+         even for a good player. Use the whole range -- if everything you return
+         is a 1 or 2, you are rating wrong.
  w  why, MAXIMUM 8 words, concrete -- name the technique or the part
 
 Score honestly: most pop songs are g<=2. Reserve g>=4 for songs where the guitar
@@ -131,6 +139,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--batch", type=int, default=40)
     ap.add_argument("--limit", type=int, default=0, help="only tag N songs (for a test run)")
+    ap.add_argument("--sample", action="store_true",
+                    help="with --limit, take a random spread instead of the first N. "
+                         "Spotify returns newest-first, so the first N is a biased "
+                         "sample of recent taste -- use this to judge the rubric.")
     ap.add_argument("--dry-run", action="store_true", help="show the cost estimate, call nothing")
     a = ap.parse_args()
 
@@ -142,11 +154,17 @@ def main():
 
     send, dropped = prefiltered(tracks)
     todo = [t for t in send if t["id"] not in cache]
+    cached = len(send) - len(todo)          # count BEFORE --limit truncates
     if a.limit:
-        todo = todo[:a.limit]
+        if a.sample:
+            random.seed(0)                  # reproducible: same sample every run
+            todo = random.sample(todo, min(a.limit, len(todo)))
+        else:
+            todo = todo[:a.limit]
 
     print(f"{len(tracks)} liked · {len(dropped)} dropped free (dupes, already "
-          f"curated, genre) · {len(send) - len(todo)} cached · {len(todo)} to tag")
+          f"curated, genre) · {cached} cached · {len(todo)} to tag"
+          + (f" (random sample of {len(send) - cached})" if a.limit and a.sample else ""))
 
     if a.dry_run or not todo:
         est = (len(todo) * 22 * PRICE_IN) + (len(todo) * 28 * PRICE_OUT)

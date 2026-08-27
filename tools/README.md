@@ -66,10 +66,20 @@ but it costs one request per artist and buys nothing. Don't run it casually — 
 1,600-artist crawl earned a `Retry-After: 85220` (~24 hour) throttle on that endpoint.
 `/v1/me/tracks` is throttled separately and was unaffected.
 
+## Link verification
+
+`3_build.py` checks every pick against Ultimate Guitar before it lands on the board and
+substitutes the next candidate when a song has no tab — plenty of obscure blues sides
+don't. Results cache in `ug-cache.json`, so re-runs are quiet. `--no-verify` skips it.
+
+Spotify titles are cleaned first ("- Live from Spotify SXSW 2014", "(feat. X)",
+"- Remastered 2011"), since that cruft finds nothing on UG and reads badly on the board.
+
 ## Tuning the picks
 
 ```bash
 python3 tools/3_build.py --top 60          # longer board
+python3 tools/3_build.py --min-guitar 5    # only the very best, 52 songs qualified
 python3 tools/3_build.py --min-guitar 4    # stricter: only strongly guitar-led songs
 python3 tools/3_build.py --per-edge 20     # less balancing across growth edges
 ```

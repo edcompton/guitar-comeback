@@ -5,3 +5,4 @@ library.json
 tags.json
 __pycache__/
 artists.json
+ug-cache.json
