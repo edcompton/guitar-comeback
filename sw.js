@@ -1,7 +1,7 @@
 /* Guitar Comeback HQ service worker.
    Strategy: network-first for data.json and index.html (fresh when online),
    cache-first for everything else. Bump CACHE_VERSION when precached assets change. */
-var CACHE_VERSION = 'gchq-v2';
+var CACHE_VERSION = 'gchq-v3';
 var PRECACHE = ['.', 'index.html', 'data.json', 'backlog.json', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', function (e) {

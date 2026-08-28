@@ -12,7 +12,7 @@
   :root{
     --bg:#131009; --panel:#1c1710; --panel2:#251d12; --line:#3a2f1c;
     --amber:#e8a84c; --amber-dim:#c9871f; --rust:#d96c4f; --sage:#9db87a;
-    --cream:#f2e8d5; --muted:#a89577; --faint:#6e5f47;
+    --cream:#f2e8d5; --muted:#a89577; --faint:#8d7c5c;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{background:var(--bg); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55;}
@@ -92,25 +92,28 @@
   .boards{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px;}
   .board{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px 20px;}
   .board h3{display:flex; align-items:center; gap:8px; margin-bottom:4px;}
-  .board .sub{color:var(--faint); font-size:.8rem; margin-bottom:10px;}
+  .board .sub{color:var(--faint); font-size:.82rem; margin-bottom:10px;}
   .song{display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:8px 0; border-bottom:1px dashed #2a2213;}
   .song:last-child{border-bottom:none;}
   .song .t{flex:1; color:var(--cream); font-size:.92rem;}
-  .song .t small{color:var(--faint); display:block; font-size:.78rem;}
+  .song .t small{color:var(--faint); display:block; font-size:.8rem;}
   .song .t a{color:var(--cream); text-decoration:none; border-bottom:1px dotted var(--faint);}
   .song .t a:hover{color:var(--amber); border-color:var(--amber);}
-  .chip{flex-shrink:0; font-size:.68rem; padding:2px 9px; border-radius:20px; border:1px solid var(--line); color:var(--muted); white-space:nowrap;}
+  .chip{flex-shrink:0; font-size:.72rem; padding:2px 9px; border-radius:20px; border:1px solid var(--line); color:var(--muted); white-space:nowrap;}
   .chip.now{border-color:var(--rust); color:var(--rust); font-weight:700;}
   .chip.next{border-color:var(--amber-dim); color:var(--amber);}
   .chip.later{color:var(--faint);}
   .chip.done{border-color:var(--sage); color:var(--sage);}
-  .song .tick{flex-shrink:0; width:22px; height:22px; border-radius:6px; border:1px solid var(--line); background:none; color:transparent; cursor:pointer; font-size:.72rem; line-height:1; align-self:center;}
-  .song .tick:hover{border-color:var(--amber-dim);}
-  .song.done .tick{background:var(--sage); border-color:var(--sage); color:#131009;}
+  .song .tick{flex-shrink:0; width:44px; height:44px; margin:-10px -10px -10px -12px; padding:0; border:none; background:none; cursor:pointer; font-size:0; display:grid; place-items:center; align-self:center; -webkit-tap-highlight-color:transparent;}
+  .song .tick::before{content:"\2713"; display:grid; place-items:center; width:24px; height:24px; border-radius:6px; border:1px solid var(--line); color:transparent; font-size:.8rem; line-height:1; transition:border-color .12s;}
+  .song .tick:hover::before{border-color:var(--amber-dim);}
+  .song .tick:focus-visible{outline:2px solid var(--amber); outline-offset:2px; border-radius:8px;}
+  .song.done .tick::before{background:var(--sage); border-color:var(--sage); color:#131009;}
   .song.done .t, .song.done .t a{color:var(--sage);}
   #updbar{position:fixed; left:0; right:0; bottom:0; background:#241c11f2; border-top:1px solid var(--amber-dim); padding:12px 20px; display:none; align-items:center; gap:14px; backdrop-filter:blur(6px); z-index:9;}
   #updbar.show{display:flex;}
-  #updbar .msg{flex:1; color:var(--cream); font-size:.85rem;}
+  #updbar .msg{flex:1; min-width:0; color:var(--cream); font-size:.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  #updbar .msg b{color:var(--amber);}
   #updbar button.copy{background:var(--amber); color:#131009; border:none; border-radius:8px; padding:8px 16px; font-weight:700; cursor:pointer; white-space:nowrap;}
   #updbar button.copy:hover{background:var(--cream);}
 
@@ -136,6 +139,31 @@
   .wday b{display:block; color:var(--cream); font-size:.78rem; line-height:1.3;}
   .wday span{color:var(--muted); font-size:.71rem; line-height:1.35; display:block; margin-top:3px;}
 
+  /* tonight — the one thing the page must answer at 19:30 */
+  .tonight{margin-top:22px; background:linear-gradient(160deg,#2f2211,#1c1710); border:1px solid var(--amber-dim); border-radius:14px; padding:18px 20px;}
+  .tonight .top{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;}
+  .tonight .lbl{color:var(--rust); font-weight:700; text-transform:uppercase; letter-spacing:.16em; font-size:.72rem;}
+  .tonight .badge{background:var(--amber-dim); color:#131009; font-weight:700; font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border-radius:20px;}
+  .tonight .task{color:var(--muted); font-size:1rem; line-height:1.5;}
+  .tonight .task b{color:var(--cream);}
+  .tonight .focus{margin-top:14px; padding-top:12px; border-top:1px dashed #3a2f1c; display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+  .tonight .focus .fl{color:var(--faint); font-size:.75rem; text-transform:uppercase; letter-spacing:.12em; font-weight:700;}
+  .tonight .focus a{display:inline-block; color:var(--amber); text-decoration:none; font-size:.9rem; border:1px solid var(--amber-dim); border-radius:20px; padding:6px 13px; min-height:34px;}
+  .tonight .focus a:hover{background:var(--amber); color:#131009;}
+  .tonight .stale{margin-top:12px; font-size:.78rem; color:var(--faint);}
+  .tonight .stale.warn{color:var(--rust); font-weight:600;}
+
+  /* collapsible reference sections — read-once content, out of the nightly path */
+  details.ref{border-top:1px solid var(--line); padding-top:14px;}
+  details.ref>summary{list-style:none; cursor:pointer; position:relative; padding:8px 32px 8px 0; min-height:44px;}
+  details.ref>summary::-webkit-details-marker{display:none;}
+  details.ref>summary h2{margin-bottom:0;}
+  details.ref>summary .kicker{margin-bottom:3px;}
+  details.ref>summary .caret{position:absolute; right:4px; top:50%; margin-top:-.6em; color:var(--amber-dim); font-size:1rem; transition:transform .15s;}
+  details.ref[open]>summary .caret{transform:rotate(90deg);}
+  details.ref>summary:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:6px;}
+  details.ref[open]{padding-bottom:8px;}
+
   /* this week */
   .kick{margin-top:18px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px 22px;}
   .kick .krow{display:grid; grid-template-columns:52px 1fr; gap:14px; padding:8px 0; border-bottom:1px dashed #2a2213; align-items:baseline;}
@@ -145,6 +173,13 @@
   .kick .krow p b{color:var(--cream);}
   .loaderr{margin-top:16px; color:var(--rust); font-size:.88rem;}
 
+  @media(max-width:600px){
+    .wrap{padding:22px 16px 90px;}
+    h1{font-size:2rem; line-height:1.1;}
+    section{margin-top:34px;}
+    .hero{padding-bottom:22px;}
+    .hero .lede, .hero .mission{margin-top:16px;}
+  }
   @media(max-width:820px){ .mission,.menu{grid-template-columns:1fr;} .cols,.anchors,.boards{grid-template-columns:1fr;} .weekgrid{grid-template-columns:repeat(2,1fr);} .timeline{flex-direction:column;} .seg{border-right:none; border-bottom:1px solid var(--line);} .phase{grid-template-columns:1fr;} }
 </style>
 </head>
@@ -154,6 +189,7 @@
   <header class="hero">
     <div class="kicker">Ed · Summer 2026</div>
     <h1>Guitar Comeback HQ</h1>
+    <div class="tonight" id="tonight" hidden></div>
     <p class="lede">The mission: <strong>30–45 minutes a day</strong>, in the evening, guitar in hand instead of controller. Not a bootcamp — a standing date with the thing you already love. The player who learned <strong>Kensington Blues</strong> is still in there; this page is the map back, plus the new territory: <strong>electric confidence, blues lead, and slide</strong>.</p>
     <div class="mission">
       <div class="m"><b>Revive</b><span>Bring the rusty repertoire back to performance level — it comes back in days, not weeks.</span></div>
@@ -163,8 +199,8 @@
   </header>
 
   <section>
-    <div class="kicker">Where you're starting</div>
-    <h2>Player profile</h2>
+    <details class="ref">
+      <summary><span class="kicker">Where you're starting</span><h2>Player profile</h2><span class="caret">▸</span></summary>
     <hr class="rule">
     <div class="cols">
       <div class="card">
@@ -196,11 +232,12 @@
         </ul>
       </div>
     </div>
+    </details>
   </section>
 
   <section>
-    <div class="kicker">The rhythm of the week</div>
-    <h2>Two anchors + a menu</h2>
+    <details class="ref">
+      <summary><span class="kicker">The rhythm of the week</span><h2>Two anchors + a menu</h2><span class="caret">▸</span></summary>
     <p class="lede">Two evenings are fixed — that's where deliberate progress happens. Every other evening, pick whatever you're in the mood for from the menu. Mood-led choice is what keeps this fun instead of homework. Here's the default week:</p>
     <div class="weekgrid">
       <div class="wday"><div class="d">Mon</div><span class="em2">🪕</span><b>Repertoire Revival</b><span>Focus song of the week</span></div>
@@ -230,11 +267,12 @@
       <div class="card"><span class="em">🎧</span><h3>Free Play</h3><p>No goals. Play along with records, noodle, improvise, play the hits. Counts fully. At least one of these a week — it's the point of the whole thing.</p></div>
     </div>
     <p class="note">Anchor days are suggestions — move them to whatever evenings are calmest. The rule is only: two anchors, every week.</p>
+    </details>
   </section>
 
   <section>
-    <div class="kicker">Inside a session</div>
-    <h2>The 35-minute shape</h2>
+    <details class="ref">
+      <summary><span class="kicker">Inside a session</span><h2>The 35-minute shape</h2><span class="caret">▸</span></summary>
     <div class="timeline">
       <div class="seg s1"><span class="min">3 min</span><b>Pick up &amp; tune</b><span>The ritual that starts it</span></div>
       <div class="seg s2"><span class="min">5 min</span><b>Warm up</b><span>Picking pattern, scale, or riff loop — rotate</span></div>
@@ -242,6 +280,7 @@
       <div class="seg s4"><span class="min">5 min</span><b>Victory lap</b><span>Play something that already sounds great</span></div>
     </div>
     <p class="note">Short on time or energy? The minimum viable session is 10 minutes: tune, play one song you love, done. It still counts. It especially counts.</p>
+    </details>
   </section>
 
   <section id="thisweek-section">
@@ -252,8 +291,8 @@
   </section>
 
   <section>
-    <div class="kicker">The arc</div>
-    <h2>Twelve weeks, three phases</h2>
+    <details class="ref">
+      <summary><span class="kicker">The arc</span><h2>Twelve weeks, three phases</h2><span class="caret">▸</span></summary>
     <p class="lede">Loose targets, not deadlines. If a phase takes five weeks instead of four, nothing breaks. The only failure mode is stopping.</p>
 
     <div class="phase">
@@ -300,19 +339,20 @@
       <h3>🎙️ The Living Room EP — the week-12 finish line</h3>
       <p>Five phone recordings, one sitting or several: a revived fingerstyle piece · a brand-new song · an electric riff track · a slide tune · one wildcard. Nobody ever needs to hear it. It exists so <b>you</b> can hear the comeback.</p>
     </div>
+    </details>
   </section>
 
   <section>
     <div class="kicker">The material</div>
     <h2>Song boards</h2>
-    <p class="lede">Built from your learned-songs list, your saved tabs, and your Spotify likes. Every title links to its tab. Click the <strong>✓</strong> on a song when you've nailed it or made real progress — ticks are remembered on this device, and the bar at the bottom gives you an update to paste to Claude so the canonical page moves too.</p>
+    <p class="lede">Built from your learned-songs list, your saved tabs, and your Spotify likes. Every title links to its tab. Tap the <strong>✓</strong> when you've nailed one or made real progress — ticks are remembered on this device, and the bar at the bottom gives you an update to paste to Claude so the canonical page moves too.</p>
     <div class="boards" id="boards"></div>
     <p class="loaderr" id="loaderr" hidden>Couldn't load data.json — if you opened this file directly, serve it instead (<code>python3 -m http.server</code>) or use the GitHub Pages URL.</p>
   </section>
 
   <section class="res">
-    <div class="kicker">The library</div>
-    <h2>Resources</h2>
+    <details class="ref">
+      <summary><span class="kicker">The library</span><h2>Resources</h2><span class="caret">▸</span></summary>
     <hr class="rule">
     <div class="cols">
       <div class="card">
@@ -348,11 +388,12 @@
         </ul>
       </div>
     </div>
+    </details>
   </section>
 
   <section>
-    <div class="kicker">Making it stick</div>
-    <h2>Rules of the game</h2>
+    <details class="ref">
+      <summary><span class="kicker">Making it stick</span><h2>Rules of the game</h2><span class="caret">▸</span></summary>
     <div class="rules">
       <div class="r"><div><b>Guitars live on stands, Strat stays plugged in.</b><span>Cases are where habits die. The distance between "I fancy it" and playing should be under 20 seconds.</span></div></div>
       <div class="r"><div><b>When the gaming urge hits, pick up a guitar first.</b><span>Ten minutes of playing buys anything else guilt-free. Most nights, you won't want to stop — you already know this about yourself.</span></div></div>
@@ -362,6 +403,7 @@
       <div class="r"><div><b>Rusty is not lost.</b><span>A song that took six weeks to learn takes days to revive. The first fumbling run-through is the worst it will ever sound again.</span></div></div>
       <div class="r"><div><b>Record at every milestone.</b><span>Phone on the bookshelf, one take, no editing. Hearing yourself back is where the love gets rebuilt.</span></div></div>
     </div>
+    </details>
   </section>
 
   <footer>
@@ -376,26 +418,31 @@
   function loadTicks(){ try{ return JSON.parse(localStorage.getItem(TICK_KEY))||[]; }catch(e){ return []; } }
   function saveTicks(t){ try{ localStorage.setItem(TICK_KEY, JSON.stringify(t)); }catch(e){} }
 
+  function el(tag, cls, html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
   var bar=document.createElement('div'); bar.id='updbar';
   bar.innerHTML='<div class="msg"></div><button class="copy">Copy update for Claude</button>';
   document.body.appendChild(bar);
   var msgEl=bar.querySelector('.msg'), btn=bar.querySelector('.copy');
-  var sessionMarks=[];
+  var sessionMarks=[], copyText='';
   function renderBar(){
     if(!sessionMarks.length){bar.classList.remove('show'); return;}
     bar.classList.add('show');
-    msgEl.textContent='Guitar update: nailed / made progress on — '+sessionMarks.join(' · ');
+    copyText='Guitar update: nailed / made progress on — '+sessionMarks.join(' · ');
+    // One line, fixed height. The full list goes to the clipboard, not the screen.
+    var names=sessionMarks.map(function(m){return m.replace(/\s*\(.*\)$/,'');});
+    var shown=names.slice(0,2).join(', ')+(names.length>2?' +'+(names.length-2):'');
+    msgEl.innerHTML='<b>'+sessionMarks.length+' marked \u2713</b> — '+esc(shown);
   }
   btn.addEventListener('click',function(){
-    var txt=msgEl.textContent, ok=false;
+    var txt=copyText, ok=false;
     try{ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt); ok=true;} }catch(e){}
     if(!ok){ try{ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); ok=true; }catch(e){} }
     btn.textContent=ok?'Copied ✓':'Select & copy the text above';
     setTimeout(function(){btn.textContent='Copy update for Claude';},1800);
   });
 
-  function el(tag, cls, html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
-  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
   function songLabel(song){
     var main=song.parts.map(function(p){return p.t;}).join(' · ');
@@ -430,7 +477,53 @@
     return board;
   }
 
+  var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var LONG=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  // The page has a day-by-day plan but never used to say which day it is. This is
+  // the whole point of the card: answer "what am I doing tonight" without scrolling.
+  function renderTonight(data){
+    var box=document.getElementById('tonight');
+    var tw=data.thisWeek||{}, rows=tw.rows||[];
+    var now=new Date(), abbr=DAYS[now.getDay()];
+    var row=null;
+    for(var i=0;i<rows.length;i++){
+      if(String(rows[i].day||'').trim().slice(0,3).toLowerCase()===abbr.toLowerCase()){ row=rows[i]; break; }
+    }
+    if(!row){ box.hidden=true; return; }
+
+    var head='<div class="top"><span class="lbl">Tonight · '+esc(LONG[now.getDay()])+' '
+      +now.getDate()+' '+now.toLocaleDateString('en-GB',{month:'long'})+'</span>'
+      +(row.anchor?'<span class="badge">\u2693 Anchor</span>':'')+'</div>';
+    var html=head+'<div class="task">'+(row.html||'')+'</div>';
+
+    // Straight to the tabs for whatever is currently the focus.
+    var focus=[];
+    (data.boards||[]).forEach(function(b){
+      (b.songs||[]).forEach(function(sg){
+        if(sg.chip&&sg.chip.c==='now'&&focus.length<3){
+          var pt=sg.parts&&sg.parts[0];
+          if(pt&&pt.u) focus.push('<a href="'+pt.u+'" target="_blank" rel="noopener">'+esc(pt.t)+' \u2192</a>');
+        }
+      });
+    });
+    if(focus.length) html+='<div class="focus"><span class="fl">Focus</span>'+focus.join('')+'</div>';
+
+    // 5. Staleness. The week block is the most time-sensitive thing on the page and
+    // used to rot silently.
+    var m=data.meta||{};
+    if(m.updated){
+      var age=Math.floor((now-new Date(m.updated+'T00:00:00'))/86400000);
+      var stale=age>7;
+      html+='<div class="stale'+(stale?' warn':'')+'">'+esc(tw.title||'This week')+' · '
+        +(age<=0?'updated today':'updated '+age+' day'+(age===1?'':'s')+' ago')
+        +(stale?' — ask Claude to rewrite this week':'')+'</div>';
+    }
+    box.innerHTML=html; box.hidden=false;
+  }
+
   function render(data){
+    renderTonight(data);
     // This week
     var tw=data.thisWeek||{};
     document.getElementById('tw-title').textContent=tw.title||'This week';
