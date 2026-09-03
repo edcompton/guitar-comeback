@@ -1,5 +1,7 @@
 # Guitar Comeback HQ
 
+> **State of play and what's next: [PROGRESS.md](PROGRESS.md).** Read it first — this file is conventions, that one is current state.
+
 A single-page static app tracking Ed's guitar comeback: song boards with progress chips, the weekly practice rhythm, and a 12-week arc. Served by GitHub Pages; edited here via Claude Code. No build step, no dependencies — keep it that way.
 
 ## File map
